@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Khảo Sát Phong Cách Đầu Tư</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        .form-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+        }
+        .form-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .form-question {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.3);
+        }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-label:hover {
+            background-color: #F9FAFB;
+        }
+        input[type="radio"]:checked + .radio-label {
+            background-color: #EFF6FF;
+            border-color: #3B82F6;
+        }
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background-color: #2563EB;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #1D4ED8;
+        }
+        .submit-btn:disabled {
+            background-color: #9CA3AF;
+            cursor: not-allowed;
+        }
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="container mx-auto max-w-4xl px-4 py-8 md:py-12">
+        <div id="survey-form-container">
+            <header class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Bảng Khảo Sát & Thấu Hiểu Nhà Đầu Tư</h1>
+                <p class="mt-3 text-gray-600">Cảm ơn anh/chị đã dành chút thời gian để hoàn thành khảo sát. Những thông tin này sẽ giúp em có thể tư vấn một chiến lược đầu tư phù hợp nhất với khẩu vị rủi ro và mục tiêu tài chính của mình.</p>
+            </header>
+
+            <form id="investment-survey-form">
+                <!-- Phần 1: Hiểu rõ thực trạng và nền tảng tài chính -->
+                <div class="form-section">
+                    <h2 class="text-2xl font-bold text-blue-600 border-b pb-4 mb-6">Phần 1: Nền Tảng Tài Chính Hiện Tại</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">1. Tầm nhìn tài chính trong 5 năm tới</label>
+                        <p class="form-question">Hãy tưởng tượng 5 năm nữa, anh/chị muốn bức tranh tài chính của mình trông như thế nào ạ?</p>
+                        <textarea name="tam_nhin_5_nam" class="form-textarea" rows="3" placeholder="Ví dụ: Sở hữu một căn nhà, có một khoản tiết kiệm lớn cho con, tự do tài chính..."></textarea>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 form-group">
+                        <div>
+                            <p class="form-question">1A. Kế hoạch sơ bộ của anh/chị để đạt được điều đó là gì?</p>
+                            <textarea name="ke_hoach_so_bo" class="form-textarea" rows="3" placeholder="Ví dụ: Tăng thu nhập, đầu tư vào cổ phiếu, tiết kiệm X% mỗi tháng..."></textarea>
+                        </div>
+                        <div>
+                             <p class="form-question">1B. Để đạt mục tiêu đó, con số tài chính cụ thể và tỷ suất lợi nhuận kỳ vọng mỗi năm là bao nhiêu?</p>
+                            <input type="number" name="muc_tieu_tai_chinh" class="form-input mb-3" placeholder="Số tiền mục tiêu (VNĐ)">
+                            <input type="number" name="loi_nhuan_ky_vong" class="form-input" placeholder="Tỷ suất lợi nhuận kỳ vọng (%/năm)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">2. Thói quen tài chính hàng tháng</label>
+                        <p class="form-question">Khi nhận lương, hành động đầu tiên của anh/chị thường là gì?</p>
+                        <div class="space-y-3">
+                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Thanh toán hóa đơn" class="hidden"> <span class="ml-3">Thanh toán các hóa đơn cố định</span></label>
+                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Tiết kiệm/Đầu tư" class="hidden"> <span class="ml-3">Trích một khoản để tiết kiệm/đầu tư ngay</span></label>
+                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Chi tiêu tự nhiên" class="hidden"> <span class="ml-3">Để trong tài khoản và chi tiêu tự nhiên</span></label>
+                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Khác" class="hidden"> <span class="ml-3">Khác</span></label>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 form-group">
+                        <div>
+                            <p class="form-question">2A. Anh/chị đang dành khoảng bao nhiêu % thu nhập mỗi tháng cho việc tiết kiệm và đầu tư?</p>
+                            <input type="number" name="phan_tram_tiet_kiem" class="form-input" placeholder="% thu nhập">
+                        </div>
+                        <div>
+                            <p class="form-question">2B. Tỷ lệ này có được duy trì đều đặn trong 6 tháng gần đây không?</p>
+                            <div class="flex space-x-4 mt-2">
+                                <label class="radio-label flex-1"><input type="radio" name="duy_tri_deu_dan" value="Có" class="hidden"><span class="ml-3">Có</span></label>
+                                <label class="radio-label flex-1"><input type="radio" name="duy_tri_deu_dan" value="Không" class="hidden"><span class="ml-3">Không</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">3. Quỹ dự phòng rủi ro</label>
+                        <p class="form-question">Giả sử nguồn thu nhập chính tạm gián đoạn, quỹ dự phòng của anh/chị hiện tại đủ cho bao nhiêu tháng chi tiêu thiết yếu?</p>
+                        <div class="space-y-3">
+                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="Dưới 3 tháng" class="hidden"><span class="ml-3">Dưới 3 tháng</span></label>
+                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="3 - 6 tháng" class="hidden"><span class="ml-3">3 - 6 tháng</span></label>
+                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="6 - 12 tháng" class="hidden"><span class="ml-3">6 - 12 tháng</span></label>
+                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="Trên 12 tháng" class="hidden"><span class="ml-3">Trên 12 tháng</span></label>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <p class="form-question">Quỹ này anh/chị đang giữ ở dạng nào là chủ yếu?</p>
+                        <div class="space-y-3">
+                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Tiền mặt" class="hidden"><span class="ml-3">Tiền mặt</span></label>
+                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Tài khoản tiết kiệm" class="hidden"><span class="ml-3">Tài khoản tiết kiệm ngân hàng</span></label>
+                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Vàng" class="hidden"><span class="ml-3">Vàng</span></label>
+                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Tài sản khác" class="hidden"><span class="ml-3">Một dạng tài sản khác</span></label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="form-label">4. Tình hình nợ và các khoản vay</label>
+                        <p class="form-question">Hiện tại, tổng tiền trả lãi và gốc cho các khoản vay (trả góp, mua nhà, xe...) hàng tháng chiếm khoảng bao nhiêu % thu nhập của anh/chị?</p>
+                        <input type="number" name="phan_tram_vay" class="form-input" placeholder="% thu nhập">
+                    </div>
+                    <div class="form-group">
+                        <p class="form-question">Thói quen thanh toán thẻ tín dụng của anh/chị thường là gì?</p>
+                        <div class="space-y-3">
+                           <label class="radio-label"><input type="radio" name="thoi_quen_the_tin_dung" value="Không dùng thẻ tín dụng" class="hidden"><span class="ml-3">Tôi không dùng thẻ tín dụng</span></label>
+                           <label class="radio-label"><input type="radio" name="thoi_quen_the_tin_dung" value="Thanh toán toàn bộ" class="hidden"><span class="ml-3">Thanh toán toàn bộ dư nợ</span></label>
+                           <label class="radio-label"><input type="radio" name="thoi_quen_the_tin_dung" value="Thanh toán tối thiểu" class="hidden"><span class="ml-3">Chỉ thanh toán mức tối thiểu</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần 2: Phác họa chân dung và phong cách đầu tư -->
+                <div class="form-section">
+                    <h2 class="text-2xl font-bold text-blue-600 border-b pb-4 mb-6">Phần 2: Phong Cách & Khẩu Vị Đầu Tư</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">1. Mục tiêu tài chính ưu tiên</label>
+                        <p class="form-question">Ở giai đoạn hiện tại, mục tiêu tài chính nào là ưu tiên số một của anh/chị?</p>
+                         <div class="space-y-3">
+                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Tích lũy mua nhà/xe" class="hidden"><span class="ml-3">Tích lũy mua tài sản lớn (nhà, xe)</span></label>
+                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Chuẩn bị cho con" class="hidden"><span class="ml-3">Chuẩn bị cho con (du học, lập nghiệp)</span></label>
+                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Gia tăng tài sản" class="hidden"><span class="ml-3">Gia tăng tài sản mạnh mẽ</span></label>
+                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Tạo thu nhập thụ động" class="hidden"><span class="ml-3">Tạo nguồn thu nhập thụ động</span></label>
+                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Hưu trí an nhàn" class="hidden"><span class="ml-3">Chuẩn bị cho hưu trí an nhàn</span></label>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <p class="form-question">Khung thời gian cụ thể cho mục tiêu này là bao lâu?</p>
+                        <div class="space-y-3">
+                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="Dưới 3 năm" class="hidden"><span class="ml-3">Dưới 3 năm</span></label>
+                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="3 - 5 năm" class="hidden"><span class="ml-3">3 - 5 năm</span></label>
+                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="5 - 10 năm" class="hidden"><span class="ml-3">5 - 10 năm</span></label>
+                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="Trên 10 năm" class="hidden"><span class="ml-3">Trên 10 năm</span></label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">2. Mức độ chấp nhận rủi ro</label>
+                        <p class="form-question">Giả sử có 3 chiến lược đầu tư dài hạn (trên 5 năm), anh/chị cảm thấy chiến lược nào phù hợp nhất?</p>
+                        <div class="space-y-3">
+                            <label class="radio-label"><input type="radio" name="chien_luoc_dau_tu" value="Ổn định" class="hidden"> <div class="ml-3"><p class="font-semibold">A - Ổn định</p><p class="text-sm text-gray-500">Lợi nhuận kỳ vọng 8-10%/năm. Mức sụt giảm tối đa ~10%.</p></div></label>
+                            <label class="radio-label"><input type="radio" name="chien_luoc_dau_tu" value="Cân bằng" class="hidden"> <div class="ml-3"><p class="font-semibold">B - Cân bằng</p><p class="text-sm text-gray-500">Lợi nhuận kỳ vọng 12-15%/năm. Mức sụt giảm tối đa ~20%.</p></div></label>
+                            <label class="radio-label"><input type="radio" name="chien_luoc_dau_tu" value="Tăng trưởng" class="hidden"> <div class="ml-3"><p class="font-semibold">C - Tăng trưởng</p><p class="text-sm text-gray-500">Lợi nhuận kỳ vọng >18%/năm. Mức sụt giảm tối đa có thể >30%.</p></div></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="form-question">Anh/chị đã bao giờ trải qua việc danh mục sụt giảm trên 20% chưa? Nếu có, cảm xúc và hành động của anh/chị lúc đó là gì?</p>
+                        <textarea name="kinh_nghiem_sut_giam" class="form-textarea" rows="3" placeholder="Chia sẻ trải nghiệm của anh/chị (nếu có)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">3. Phản ứng với biến động thị trường</label>
+                        <p class="form-question">Nhớ lại một lần thị trường giảm mạnh gần đây (Covid 2020, 2022), quyết định đầu tư lớn nhất (mua, bán, giữ nguyên) của anh/chị là gì?</p>
+                        <textarea name="quyet_dinh_khi_thi_truong_giam" class="form-textarea" rows="3" placeholder="Ví dụ: Bán hết danh mục, mua bắt đáy một cổ phiếu A, hoặc không làm gì..."></textarea>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 form-group">
+                        <div>
+                            <p class="form-question">Kết quả và bài học rút ra từ quyết định đó là gì?</p>
+                             <textarea name="bai_hoc_rut_ra" class="form-textarea" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <p class="form-question">Nếu được quay lại, anh/chị có thay đổi quyết định không?</p>
+                            <div class="flex space-x-4 mt-2">
+                                <label class="radio-label flex-1"><input type="radio" name="thay_doi_quyet_dinh" value="Có" class="hidden"><span class="ml-3">Có</span></label>
+                                <label class="radio-label flex-1"><input type="radio" name="thay_doi_quyet_dinh" value="Không" class="hidden"><span class="ml-3">Không</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="form-label">4. Quy trình ra quyết định đầu tư</label>
+                        <p class="form-question">Khi quyết định mua một cổ phiếu, quy trình tìm hiểu và phân tích của anh/chị thường diễn ra như thế nào?</p>
+                        <textarea name="quy_trinh_phan_tich" class="form-textarea" rows="4" placeholder="Ví dụ: Đọc báo cáo tài chính, xem phân tích kỹ thuật, hỏi ý kiến chuyên gia..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <p class="form-question">Những nguồn thông tin hoặc chỉ số tài chính nào anh/chị cho là quan trọng nhất?</p>
+                        <textarea name="nguon_thong_tin_quan_trong" class="form-textarea" rows="3" placeholder="Ví dụ: P/E, P/B, báo cáo của công ty chứng khoán, diễn đàn..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                     <h2 class="text-2xl font-bold text-blue-600 border-b pb-4 mb-6">Thông Tin Liên Hệ</h2>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="ho_ten" class="form-label">Họ và Tên</label>
+                            <input type="text" id="ho_ten" name="ho_ten" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="so_dien_thoai" class="form-label">Số Điện Thoại</label>
+                            <input type="tel" id="so_dien_thoai" name="so_dien_thoai" class="form-input" required>
+                        </div>
+                     </div>
+                </div>
+
+                <div>
+                    <button type="submit" id="submit-button" class="submit-btn">
+                        <span id="button-text">Hoàn Thành & Gửi Khảo Sát</span>
+                        <div id="loader" class="loader hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="thank-you-message" class="hidden text-center form-section">
+            <h2 class="text-3xl font-bold text-green-600">Gửi thành công!</h2>
+            <p class="mt-4 text-lg text-gray-700">Em đã nhận được thông tin khảo sát của anh/chị. Em sẽ xem xét cẩn thận và liên hệ lại với anh/chị trong thời gian sớm nhất để trao đổi về chiến lược đầu tư phù hợp.</p>
+            <p class="mt-2 text-gray-600">Cảm ơn anh/chị rất nhiều!</p>
+        </div>
+        
+        <div id="error-message" class="hidden text-center form-section">
+            <h2 class="text-3xl font-bold text-red-600">Đã có lỗi xảy ra</h2>
+            <p class="mt-4 text-lg text-gray-700">Rất tiếc, đã có lỗi trong quá trình gửi form. Vui lòng thử lại sau hoặc liên hệ trực tiếp với em.</p>
+        </div>
+
+    </div>
+
+    <script>
+        const form = document.getElementById('investment-survey-form');
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const loader = document.getElementById('loader');
+        const formContainer = document.getElementById('survey-form-container');
+        const thankYouMessage = document.getElementById('thank-you-message');
+        const errorMessage = document.getElementById('error-message');
+
+        // !!! QUAN TRỌNG: Dán URL Web App của bạn vào đây
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz63Ark4t-N-wIx3jc_zPKYUwo-grg10kuDYa7tlsGaIDPlyRGQ4mvkjeQyXcs-WlhB/exec';
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (GOOGLE_SCRIPT_URL === 'DÁN_URL_GOOGLE_APPS_SCRIPT_CỦA_BẠN_VÀO_ĐÂY') {
+                 alert('Vui lòng cấu hình URL Google Apps Script trong file HTML trước khi gửi!');
+                 return;
+            }
+
+            submitButton.disabled = true;
+            buttonText.textContent = 'Đang gửi...';
+            loader.classList.remove('hidden');
+
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Thêm ngày giờ gửi
+            data.timestamp = new Date().toLocaleString('vi-VN');
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Quan trọng: Google Scripts yêu cầu no-cors cho các request đơn giản
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                redirect: 'follow',
+                body: JSON.stringify(data)
+            })
+            .then(res => {
+                // Do mode là 'no-cors', chúng ta không thể đọc response.
+                // Chúng ta sẽ giả định là thành công và hiển thị thông báo cảm ơn.
+                formContainer.classList.add('hidden');
+                thankYouMessage.classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                formContainer.classList.add('hidden');
+                errorMessage.classList.remove('hidden');
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                buttonText.textContent = 'Hoàn Thành & Gửi Khảo Sát';
+                loader.classList.add('hidden');
+            });
+        });
+
+        // Thêm hiệu ứng cho các radio button
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const name = radio.name;
+                document.querySelectorAll(`input[type="radio"][name="${name}"]`).forEach(r => {
+                    const parentLabel = r.closest('.radio-label');
+                    if (r.checked) {
+                        parentLabel.classList.add('bg-blue-100', 'border-blue-500');
+                    } else {
+                        parentLabel.classList.remove('bg-blue-100', 'border-blue-500');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
