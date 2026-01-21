@@ -1,383 +1,460 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảng Khảo Sát Phong Cách Đầu Tư</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Công Cụ Định Giá & Chiến Lược Chứng Quyền</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --bg-light: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
         body {
-            font-family: 'Be Vietnam Pro', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            font-size: 15px;
         }
-        .form-section {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            margin-bottom: 2rem;
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 20px;
         }
-        .form-label {
-            font-size: 1rem;
+
+        /* CARD STYLES */
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        h2, h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .header-title {
+            text-align: center;
+            grid-column: 1 / -1;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* INPUT SECTIONS */
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
             font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            background-color: #fbfdff;
+        }
+
+        .small-note {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 4px;
             display: block;
         }
-        .form-question {
-            font-size: 1rem;
-            color: #4b5563;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-        .form-input, .form-textarea, .form-select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #D1D5DB;
-            border-radius: 0.5rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
-            outline: none;
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.3);
-        }
-        .radio-label {
+
+        /* TABS */
+        .tabs {
             display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            border: 1px solid #D1D5DB;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
         }
-        .radio-label:hover {
-            background-color: #F9FAFB;
-        }
-        input[type="radio"]:checked + .radio-label {
-            background-color: #EFF6FF;
-            border-color: #3B82F6;
-        }
-        .form-group {
-            margin-bottom: 1.75rem;
-        }
-        .submit-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: white;
-            background-color: #2563EB;
+
+        .tab-btn {
+            padding: 12px 20px;
             border: none;
-            border-radius: 0.5rem;
+            background: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
+            font-weight: 600;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
         }
-        .submit-btn:hover {
-            background-color: #1D4ED8;
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
         }
-        .submit-btn:disabled {
-            background-color: #9CA3AF;
-            cursor: not-allowed;
+
+        .tab-btn:hover {
+            color: var(--primary-color);
         }
-        .loader {
-            width: 20px;
-            height: 20px;
-            border: 3px solid #FFF;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-            margin-right: 0.5rem;
+
+        /* SCENARIO CONTENT */
+        .scenario-content {
+            display: none;
+            animation: fadeIn 0.4s;
         }
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .scenario-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .simulation-input {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #b6dbf8;
+            margin-bottom: 20px;
+        }
+
+        /* RESULT METRICS */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #666;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .big-result {
+            font-size: 24px;
+            font-weight: 800;
+            text-align: right;
+        }
+
+        .text-success { color: var(--success-color); }
+        .text-danger { color: var(--danger-color); }
+        .text-warning { color: var(--warning-color); }
+
+        /* GLOSSARY */
+        .glossary {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+            background-color: #fafafa;
+            border-radius: 4px;
+            padding: 15px;
+        }
+        .glossary h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .term-item {
+            font-size: 13px;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .term-item b {
+            color: var(--primary-color);
+        }
+        
+        /* Hiển thị công thức toán học giả lập */
+        .math-formula {
+            font-family: 'Courier New', Courier, monospace;
+            background: #eee;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        /* FOOTER NOTE */
+        .footer-note {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff8e1;
+            border-left: 5px solid #ffc107;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+<body>
 
-<body class="bg-gray-50">
-    <div class="container mx-auto max-w-4xl px-4 py-8 md:py-12">
-        <div id="survey-form-container">
-            <header class="text-center mb-10">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Bảng Khảo Sát & Thấu Hiểu Nhà Đầu Tư</h1>
-                <p class="mt-3 text-gray-600">Cảm ơn anh/chị đã dành chút thời gian để hoàn thành khảo sát. Những thông tin này sẽ giúp em có thể tư vấn một chiến lược đầu tư phù hợp nhất với khẩu vị rủi ro và mục tiêu tài chính của mình.</p>
-            </header>
+<div class="container">
+    <h1 class="header-title"><i class="fas fa-chart-line"></i> Giả Lập Giao Dịch Chứng Quyền (CW)</h1>
 
-            <form id="investment-survey-form">
-                <!-- Phần 1: Hiểu rõ thực trạng và nền tảng tài chính -->
-                <div class="form-section">
-                    <h2 class="text-2xl font-bold text-blue-600 border-b pb-4 mb-6">Phần 1: Nền Tảng Tài Chính Hiện Tại</h2>
+    <div class="card">
+        <h3><i class="fas fa-sliders-h"></i> 1. Thông Số Cấu Hình</h3>
+        
+        <div class="input-group">
+            <label>Giá thực hiện (Strike Price):</label>
+            <input type="number" id="strikePrice" value="107550" oninput="calculate()">
+            <small class="small-note">Mức giá cổ phiếu cần vượt qua (nếu giữ đáo hạn).</small>
+        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">1. Tầm nhìn tài chính trong 5 năm tới</label>
-                        <p class="form-question">Hãy tưởng tượng 5 năm nữa, anh/chị muốn bức tranh tài chính của mình trông như thế nào ạ?</p>
-                        <textarea name="tam_nhin_5_nam" class="form-textarea" rows="3" placeholder="Ví dụ: Sở hữu một căn nhà, có một khoản tiết kiệm lớn cho con, tự do tài chính..."></textarea>
-                    </div>
+        <div class="input-group">
+            <label>Tỷ lệ chuyển đổi (Conversion Ratio):</label>
+            <input type="number" id="ratio" value="8.5359" step="0.0001" oninput="calculate()">
+            <small class="small-note">Số CW cần để đổi 1 cổ phiếu cơ sở.</small>
+        </div>
 
-                    <div class="grid md:grid-cols-2 gap-6 form-group">
-                        <div>
-                            <p class="form-question">1A. Kế hoạch sơ bộ của anh/chị để đạt được điều đó là gì?</p>
-                            <textarea name="ke_hoach_so_bo" class="form-textarea" rows="3" placeholder="Ví dụ: Tăng thu nhập, đầu tư vào cổ phiếu, tiết kiệm X% mỗi tháng..."></textarea>
-                        </div>
-                        <div>
-                             <p class="form-question">1B. Để đạt mục tiêu đó, con số tài chính cụ thể và tỷ suất lợi nhuận kỳ vọng mỗi năm là bao nhiêu?</p>
-                            <input type="number" name="muc_tieu_tai_chinh" class="form-input mb-3" placeholder="Số tiền mục tiêu (VNĐ)">
-                            <input type="number" name="loi_nhuan_ky_vong" class="form-input" placeholder="Tỷ suất lợi nhuận kỳ vọng (%/năm)">
-                        </div>
-                    </div>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        
+        <h4>Vị thế của bạn:</h4>
+        <div class="input-group">
+            <label>Giá mua CW trung bình (VND):</label>
+            <input type="number" id="cwBuyPrice" value="790" oninput="calculate()">
+        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">2. Thói quen tài chính hàng tháng</label>
-                        <p class="form-question">Khi nhận lương, hành động đầu tiên của anh/chị thường là gì?</p>
-                        <div class="space-y-3">
-                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Thanh toán hóa đơn" class="hidden"> <span class="ml-3">Thanh toán các hóa đơn cố định</span></label>
-                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Tiết kiệm/Đầu tư" class="hidden"> <span class="ml-3">Trích một khoản để tiết kiệm/đầu tư ngay</span></label>
-                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Chi tiêu tự nhiên" class="hidden"> <span class="ml-3">Để trong tài khoản và chi tiêu tự nhiên</span></label>
-                            <label class="radio-label"><input type="radio" name="thoi_quen_luong" value="Khác" class="hidden"> <span class="ml-3">Khác</span></label>
-                        </div>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-6 form-group">
-                        <div>
-                            <p class="form-question">2A. Anh/chị đang dành khoảng bao nhiêu % thu nhập mỗi tháng cho việc tiết kiệm và đầu tư?</p>
-                            <input type="number" name="phan_tram_tiet_kiem" class="form-input" placeholder="% thu nhập">
-                        </div>
-                        <div>
-                            <p class="form-question">2B. Tỷ lệ này có được duy trì đều đặn trong 6 tháng gần đây không?</p>
-                            <div class="flex space-x-4 mt-2">
-                                <label class="radio-label flex-1"><input type="radio" name="duy_tri_deu_dan" value="Có" class="hidden"><span class="ml-3">Có</span></label>
-                                <label class="radio-label flex-1"><input type="radio" name="duy_tri_deu_dan" value="Không" class="hidden"><span class="ml-3">Không</span></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">3. Quỹ dự phòng rủi ro</label>
-                        <p class="form-question">Giả sử nguồn thu nhập chính tạm gián đoạn, quỹ dự phòng của anh/chị hiện tại đủ cho bao nhiêu tháng chi tiêu thiết yếu?</p>
-                        <div class="space-y-3">
-                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="Dưới 3 tháng" class="hidden"><span class="ml-3">Dưới 3 tháng</span></label>
-                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="3 - 6 tháng" class="hidden"><span class="ml-3">3 - 6 tháng</span></label>
-                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="6 - 12 tháng" class="hidden"><span class="ml-3">6 - 12 tháng</span></label>
-                            <label class="radio-label"><input type="radio" name="quy_du_phong" value="Trên 12 tháng" class="hidden"><span class="ml-3">Trên 12 tháng</span></label>
-                        </div>
-                    </div>
-                     <div class="form-group">
-                        <p class="form-question">Quỹ này anh/chị đang giữ ở dạng nào là chủ yếu?</p>
-                        <div class="space-y-3">
-                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Tiền mặt" class="hidden"><span class="ml-3">Tiền mặt</span></label>
-                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Tài khoản tiết kiệm" class="hidden"><span class="ml-3">Tài khoản tiết kiệm ngân hàng</span></label>
-                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Vàng" class="hidden"><span class="ml-3">Vàng</span></label>
-                            <label class="radio-label"><input type="radio" name="dang_quy_du_phong" value="Tài sản khác" class="hidden"><span class="ml-3">Một dạng tài sản khác</span></label>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="form-label">4. Tình hình nợ và các khoản vay</label>
-                        <p class="form-question">Hiện tại, tổng tiền trả lãi và gốc cho các khoản vay (trả góp, mua nhà, xe...) hàng tháng chiếm khoảng bao nhiêu % thu nhập của anh/chị?</p>
-                        <input type="number" name="phan_tram_vay" class="form-input" placeholder="% thu nhập">
-                    </div>
-                    <div class="form-group">
-                        <p class="form-question">Thói quen thanh toán thẻ tín dụng của anh/chị thường là gì?</p>
-                        <div class="space-y-3">
-                           <label class="radio-label"><input type="radio" name="thoi_quen_the_tin_dung" value="Không dùng thẻ tín dụng" class="hidden"><span class="ml-3">Tôi không dùng thẻ tín dụng</span></label>
-                           <label class="radio-label"><input type="radio" name="thoi_quen_the_tin_dung" value="Thanh toán toàn bộ" class="hidden"><span class="ml-3">Thanh toán toàn bộ dư nợ</span></label>
-                           <label class="radio-label"><input type="radio" name="thoi_quen_the_tin_dung" value="Thanh toán tối thiểu" class="hidden"><span class="ml-3">Chỉ thanh toán mức tối thiểu</span></label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phần 2: Phác họa chân dung và phong cách đầu tư -->
-                <div class="form-section">
-                    <h2 class="text-2xl font-bold text-blue-600 border-b pb-4 mb-6">Phần 2: Phong Cách & Khẩu Vị Đầu Tư</h2>
-
-                    <div class="form-group">
-                        <label class="form-label">1. Mục tiêu tài chính ưu tiên</label>
-                        <p class="form-question">Ở giai đoạn hiện tại, mục tiêu tài chính nào là ưu tiên số một của anh/chị?</p>
-                         <div class="space-y-3">
-                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Tích lũy mua nhà/xe" class="hidden"><span class="ml-3">Tích lũy mua tài sản lớn (nhà, xe)</span></label>
-                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Chuẩn bị cho con" class="hidden"><span class="ml-3">Chuẩn bị cho con (du học, lập nghiệp)</span></label>
-                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Gia tăng tài sản" class="hidden"><span class="ml-3">Gia tăng tài sản mạnh mẽ</span></label>
-                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Tạo thu nhập thụ động" class="hidden"><span class="ml-3">Tạo nguồn thu nhập thụ động</span></label>
-                           <label class="radio-label"><input type="radio" name="muc_tieu_uu_tien" value="Hưu trí an nhàn" class="hidden"><span class="ml-3">Chuẩn bị cho hưu trí an nhàn</span></label>
-                        </div>
-                    </div>
-                     <div class="form-group">
-                        <p class="form-question">Khung thời gian cụ thể cho mục tiêu này là bao lâu?</p>
-                        <div class="space-y-3">
-                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="Dưới 3 năm" class="hidden"><span class="ml-3">Dưới 3 năm</span></label>
-                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="3 - 5 năm" class="hidden"><span class="ml-3">3 - 5 năm</span></label>
-                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="5 - 10 năm" class="hidden"><span class="ml-3">5 - 10 năm</span></label>
-                           <label class="radio-label"><input type="radio" name="thoi_gian_muc_tieu" value="Trên 10 năm" class="hidden"><span class="ml-3">Trên 10 năm</span></label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">2. Mức độ chấp nhận rủi ro</label>
-                        <p class="form-question">Giả sử có 3 chiến lược đầu tư dài hạn (trên 5 năm), anh/chị cảm thấy chiến lược nào phù hợp nhất?</p>
-                        <div class="space-y-3">
-                            <label class="radio-label"><input type="radio" name="chien_luoc_dau_tu" value="Ổn định" class="hidden"> <div class="ml-3"><p class="font-semibold">A - Ổn định</p><p class="text-sm text-gray-500">Lợi nhuận kỳ vọng 8-10%/năm. Mức sụt giảm tối đa ~10%.</p></div></label>
-                            <label class="radio-label"><input type="radio" name="chien_luoc_dau_tu" value="Cân bằng" class="hidden"> <div class="ml-3"><p class="font-semibold">B - Cân bằng</p><p class="text-sm text-gray-500">Lợi nhuận kỳ vọng 12-15%/năm. Mức sụt giảm tối đa ~20%.</p></div></label>
-                            <label class="radio-label"><input type="radio" name="chien_luoc_dau_tu" value="Tăng trưởng" class="hidden"> <div class="ml-3"><p class="font-semibold">C - Tăng trưởng</p><p class="text-sm text-gray-500">Lợi nhuận kỳ vọng >18%/năm. Mức sụt giảm tối đa có thể >30%.</p></div></label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p class="form-question">Anh/chị đã bao giờ trải qua việc danh mục sụt giảm trên 20% chưa? Nếu có, cảm xúc và hành động của anh/chị lúc đó là gì?</p>
-                        <textarea name="kinh_nghiem_sut_giam" class="form-textarea" rows="3" placeholder="Chia sẻ trải nghiệm của anh/chị (nếu có)"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">3. Phản ứng với biến động thị trường</label>
-                        <p class="form-question">Nhớ lại một lần thị trường giảm mạnh gần đây (Covid 2020, 2022), quyết định đầu tư lớn nhất (mua, bán, giữ nguyên) của anh/chị là gì?</p>
-                        <textarea name="quyet_dinh_khi_thi_truong_giam" class="form-textarea" rows="3" placeholder="Ví dụ: Bán hết danh mục, mua bắt đáy một cổ phiếu A, hoặc không làm gì..."></textarea>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-6 form-group">
-                        <div>
-                            <p class="form-question">Kết quả và bài học rút ra từ quyết định đó là gì?</p>
-                             <textarea name="bai_hoc_rut_ra" class="form-textarea" rows="3"></textarea>
-                        </div>
-                        <div>
-                            <p class="form-question">Nếu được quay lại, anh/chị có thay đổi quyết định không?</p>
-                            <div class="flex space-x-4 mt-2">
-                                <label class="radio-label flex-1"><input type="radio" name="thay_doi_quyet_dinh" value="Có" class="hidden"><span class="ml-3">Có</span></label>
-                                <label class="radio-label flex-1"><input type="radio" name="thay_doi_quyet_dinh" value="Không" class="hidden"><span class="ml-3">Không</span></label>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="form-label">4. Quy trình ra quyết định đầu tư</label>
-                        <p class="form-question">Khi quyết định mua một cổ phiếu, quy trình tìm hiểu và phân tích của anh/chị thường diễn ra như thế nào?</p>
-                        <textarea name="quy_trinh_phan_tich" class="form-textarea" rows="4" placeholder="Ví dụ: Đọc báo cáo tài chính, xem phân tích kỹ thuật, hỏi ý kiến chuyên gia..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <p class="form-question">Những nguồn thông tin hoặc chỉ số tài chính nào anh/chị cho là quan trọng nhất?</p>
-                        <textarea name="nguon_thong_tin_quan_trong" class="form-textarea" rows="3" placeholder="Ví dụ: P/E, P/B, báo cáo của công ty chứng khoán, diễn đàn..."></textarea>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                     <h2 class="text-2xl font-bold text-blue-600 border-b pb-4 mb-6">Thông Tin Liên Hệ</h2>
-                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="form-group">
-                            <label for="ho_ten" class="form-label">Họ và Tên</label>
-                            <input type="text" id="ho_ten" name="ho_ten" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="so_dien_thoai" class="form-label">Số Điện Thoại</label>
-                            <input type="tel" id="so_dien_thoai" name="so_dien_thoai" class="form-input" required>
-                        </div>
-                     </div>
-                </div>
-
-                <div>
-                    <button type="submit" id="submit-button" class="submit-btn">
-                        <span id="button-text">Hoàn Thành & Gửi Khảo Sát</span>
-                        <div id="loader" class="loader hidden"></div>
-                    </button>
-                </div>
-            </form>
+        <div class="input-group">
+            <label>Số lượng CW sở hữu:</label>
+            <input type="number" id="quantity" value="9000" oninput="calculate()">
         </div>
         
-        <div id="thank-you-message" class="hidden text-center form-section">
-            <h2 class="text-3xl font-bold text-green-600">Gửi thành công!</h2>
-            <p class="mt-4 text-lg text-gray-700">Em đã nhận được thông tin khảo sát của anh/chị. Em sẽ xem xét cẩn thận và liên hệ lại với anh/chị trong thời gian sớm nhất để trao đổi về chiến lược đầu tư phù hợp.</p>
-            <p class="mt-2 text-gray-600">Cảm ơn anh/chị rất nhiều!</p>
+        <div class="input-group">
+            <label>Phí giao dịch công ty chứng khoán (%):</label>
+            <input type="number" id="tradingFeeRate" value="0.15" step="0.01" oninput="calculate()">
+            <small class="small-note">Thường từ 0.1% - 0.2%.</small>
         </div>
-        
-        <div id="error-message" class="hidden text-center form-section">
-            <h2 class="text-3xl font-bold text-red-600">Đã có lỗi xảy ra</h2>
-            <p class="mt-4 text-lg text-gray-700">Rất tiếc, đã có lỗi trong quá trình gửi form. Vui lòng thử lại sau hoặc liên hệ trực tiếp với em.</p>
-        </div>
-
     </div>
 
-    <script>
-        const form = document.getElementById('investment-survey-form');
-        const submitButton = document.getElementById('submit-button');
-        const buttonText = document.getElementById('button-text');
-        const loader = document.getElementById('loader');
-        const formContainer = document.getElementById('survey-form-container');
-        const thankYouMessage = document.getElementById('thank-you-message');
-        const errorMessage = document.getElementById('error-message');
+    <div class="card">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('trade')">
+                <i class="fas fa-exchange-alt"></i> Kịch bản 1: Bán trước đáo hạn
+            </button>
+            <button class="tab-btn" onclick="switchTab('hold')">
+                <i class="fas fa-hourglass-end"></i> Kịch bản 2: Giữ đến đáo hạn
+            </button>
+        </div>
 
-        // !!! QUAN TRỌNG: Dán URL Web App của bạn vào đây
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz63Ark4t-N-wIx3jc_zPKYUwo-grg10kuDYa7tlsGaIDPlyRGQ4mvkjeQyXcs-WlhB/exec';
+        <div id="tab-trade" class="scenario-content active">
+            <div class="simulation-input">
+                <label style="color: var(--accent-color);"><i class="fas fa-search-dollar"></i> Giá thị trường CW hiện tại (VND):</label>
+                <input type="number" id="cwMarketPrice" value="1100" placeholder="Nhập giá CW bạn muốn bán..." oninput="calculate()">
+                <small class="small-note">Nhập giá bạn dự định chốt lời hoặc cắt lỗ.</small>
+            </div>
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            if (GOOGLE_SCRIPT_URL === 'DÁN_URL_GOOGLE_APPS_SCRIPT_CỦA_BẠN_VÀO_ĐÂY') {
-                 alert('Vui lòng cấu hình URL Google Apps Script trong file HTML trước khi gửi!');
-                 return;
-            }
-
-            submitButton.disabled = true;
-            buttonText.textContent = 'Đang gửi...';
-            loader.classList.remove('hidden');
-
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-
-            // Thêm ngày giờ gửi
-            data.timestamp = new Date().toLocaleString('vi-VN');
+            <div class="metric-row">
+                <span class="metric-label">Tổng vốn bỏ ra (Gốc + Phí mua):</span>
+                <span class="metric-value" id="s1_totalCost">0 VND</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Doanh thu bán (Chưa trừ phí/thuế):</span>
+                <span class="metric-value" id="s1_revenue">0 VND</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Phí bán & Thuế (0.1%):</span>
+                <span class="metric-value text-danger" id="s1_fees">0 VND</span>
+            </div>
+            <div class="metric-row" style="border-top: 2px solid #eee; margin-top: 10px; padding-top: 15px;">
+                <span class="metric-label" style="font-weight: bold; font-size: 18px;">LÃI / LỖ RÒNG:</span>
+                <span class="metric-value big-result" id="s1_netProfit">0 VND</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Tỷ suất lợi nhuận (ROI):</span>
+                <span class="metric-value" id="s1_roi">0%</span>
+            </div>
             
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Quan trọng: Google Scripts yêu cầu no-cors cho các request đơn giản
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                redirect: 'follow',
-                body: JSON.stringify(data)
-            })
-            .then(res => {
-                // Do mode là 'no-cors', chúng ta không thể đọc response.
-                // Chúng ta sẽ giả định là thành công và hiển thị thông báo cảm ơn.
-                formContainer.classList.add('hidden');
-                thankYouMessage.classList.remove('hidden');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                formContainer.classList.add('hidden');
-                errorMessage.classList.remove('hidden');
-            })
-            .finally(() => {
-                submitButton.disabled = false;
-                buttonText.textContent = 'Hoàn Thành & Gửi Khảo Sát';
-                loader.classList.add('hidden');
-            });
-        });
+            <div class="glossary">
+                <h4><i class="fas fa-book"></i> Diễn giải Kịch bản 1</h4>
+                <div class="term-item"><b>Cơ chế:</b> Mua đi bán lại chứng quyền trên sàn giống hệt cổ phiếu. Lời/Lỗ dựa trên chênh lệch giá CW.</div>
+                <div class="term-item"><b>Thuế/Phí:</b> Chịu phí giao dịch (mua & bán) trả cho CTCK + Thuế TNCN 0.1% trên giá trị bán (bất kể lãi lỗ).</div>
+            </div>
+        </div>
 
-        // Thêm hiệu ứng cho các radio button
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                const name = radio.name;
-                document.querySelectorAll(`input[type="radio"][name="${name}"]`).forEach(r => {
-                    const parentLabel = r.closest('.radio-label');
-                    if (r.checked) {
-                        parentLabel.classList.add('bg-blue-100', 'border-blue-500');
-                    } else {
-                        parentLabel.classList.remove('bg-blue-100', 'border-blue-500');
-                    }
-                });
-            });
-        });
-    </script>
+        <div id="tab-hold" class="scenario-content">
+            <div class="simulation-input" style="background-color: #fcf3cf; border-color: #f9e79f;">
+                <label style="color: #d35400;"><i class="fas fa-chart-bar"></i> Giá Cổ Phiếu Cơ Sở (FPT) khi đáo hạn:</label>
+                <input type="number" id="stockPriceMaturity" value="114300" placeholder="Giá FPT..." oninput="calculate()">
+                <small class="small-note">Nhập giá cổ phiếu FPT dự kiến.</small>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">Điểm Hòa Vốn CW:</span>
+                <span class="metric-value text-warning" id="s2_breakEven">0 VND</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Giá trị 1 CW khi đáo hạn:</span>
+                <span class="metric-value" id="s2_valuePerCW">0 VND</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Tổng tiền nhận về (Sau thuế 0.1%):</span>
+                <span class="metric-value" id="s2_cashReceived">0 VND</span>
+            </div>
+             <div class="metric-row" style="border-top: 2px solid #eee; margin-top: 10px; padding-top: 15px;">
+                <span class="metric-label" style="font-weight: bold; font-size: 18px;">LÃI / LỖ RÒNG:</span>
+                <span class="metric-value big-result" id="s2_netProfit">0 VND</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Tỷ suất lợi nhuận (ROI):</span>
+                <span class="metric-value" id="s2_roi">0%</span>
+            </div>
+
+            <div class="glossary">
+                <h4><i class="fas fa-book"></i> Diễn giải Kịch bản 2</h4>
+                <div class="term-item"><b>Giá thực hiện (K):</b> Mốc giá cố định trong hợp đồng mà bạn kỳ vọng cổ phiếu sẽ vượt qua.</div>
+                <div class="term-item"><b>Giá thanh toán (S):</b> Trung bình giá đóng cửa 5 phiên cuối của cổ phiếu FPT trước ngày đáo hạn.</div>
+                <div class="term-item">
+                    <b>Cách tính tiền:</b> 
+                    <span class="math-formula">[(S - K) : Tỷ lệ] × Số lượng</span>
+                </div>
+                <div class="term-item">
+                    <b>Lưu ý quan trọng:</b> Nếu giá cổ phiếu thấp hơn giá thực hiện (<span class="math-formula">S ≤ K</span>), chứng quyền không có giá trị và bạn <b>mất trắng vốn</b>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <strong><i class="fas fa-exclamation-triangle"></i> Ghi chú cho Nhà đầu tư:</strong>
+        <ul style="margin: 5px 0 0 20px;">
+            <li>CW là sản phẩm có đòn bẩy cao, biên độ dao động lớn. Lãi nhanh nhưng rủi ro mất trắng cũng cao.</li>
+            <li><strong>Kịch bản 1 (Bán trước đáo hạn):</strong> Được ưa chuộng hơn vì tính thanh khoản và chủ động cắt lỗ/chốt lời.</li>
+            <li><strong>Kịch bản 2 (Chờ đáo hạn):</strong> Chỉ nên giữ nếu tin chắc giá cổ phiếu cơ sở sẽ tăng mạnh vượt qua Điểm hòa vốn. Rủi ro là nếu giá không vượt qua Giá thực hiện, giá trị tài sản về 0.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    });
+
+    function switchTab(tabName) {
+        document.querySelectorAll('.scenario-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function calculate() {
+        // INPUTS
+        const strikePrice = parseFloat(document.getElementById('strikePrice').value) || 0;
+        const ratio = parseFloat(document.getElementById('ratio').value) || 1;
+        const cwBuyPrice = parseFloat(document.getElementById('cwBuyPrice').value) || 0;
+        const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+        const feeRatePercent = parseFloat(document.getElementById('tradingFeeRate').value) || 0;
+        
+        const feeRate = feeRatePercent / 100;
+        const taxRate = 0.001; // 0.1%
+
+        // VỐN ĐẦU TƯ GỐC
+        const totalBuyVal = cwBuyPrice * quantity;
+        const buyFee = totalBuyVal * feeRate;
+        const totalCost = totalBuyVal + buyFee;
+
+        // --- SCENARIO 1: TRADING ---
+        const cwMarketPrice = parseFloat(document.getElementById('cwMarketPrice').value) || 0;
+        const totalSellVal = cwMarketPrice * quantity;
+        const sellFee = totalSellVal * feeRate;
+        const sellTax = totalSellVal * taxRate;
+        const totalDeductionS1 = sellFee + sellTax;
+        
+        const netReceiveS1 = totalSellVal - totalDeductionS1;
+        const profitS1 = netReceiveS1 - totalCost;
+        const roiS1 = totalCost > 0 ? (profitS1 / totalCost) * 100 : 0;
+
+        document.getElementById('s1_totalCost').innerText = formatter.format(totalCost);
+        document.getElementById('s1_revenue').innerText = formatter.format(totalSellVal);
+        document.getElementById('s1_fees').innerText = "-" + formatter.format(totalDeductionS1);
+        updateColorAndText('s1_netProfit', profitS1);
+        updateColorAndText('s1_roi', roiS1, true);
+
+        // --- SCENARIO 2: HOLD TO MATURITY ---
+        const stockPrice = parseFloat(document.getElementById('stockPriceMaturity').value) || 0;
+        
+        // Break even point calculation
+        const breakEvenStockPrice = strikePrice + ((totalCost / (1 - taxRate)) / quantity) * ratio;
+
+        let cwValueMaturity = 0;
+        let totalPayoutPreTax = 0;
+        
+        if (stockPrice > strikePrice) {
+            cwValueMaturity = (stockPrice - strikePrice) / ratio;
+            totalPayoutPreTax = cwValueMaturity * quantity;
+        }
+
+        const taxMaturity = totalPayoutPreTax * taxRate;
+        const netReceiveS2 = totalPayoutPreTax - taxMaturity;
+        const profitS2 = netReceiveS2 - totalCost;
+        const roiS2 = totalCost > 0 ? (profitS2 / totalCost) * 100 : 0;
+
+        document.getElementById('s2_breakEven').innerText = formatter.format(breakEvenStockPrice);
+        document.getElementById('s2_valuePerCW').innerText = formatter.format(cwValueMaturity);
+        document.getElementById('s2_cashReceived').innerText = formatter.format(netReceiveS2);
+        updateColorAndText('s2_netProfit', profitS2);
+        updateColorAndText('s2_roi', roiS2, true);
+    }
+
+    function updateColorAndText(elementId, value, isPercent = false) {
+        const el = document.getElementById(elementId);
+        if (isPercent) {
+            el.innerText = value.toFixed(2) + "%";
+        } else {
+            el.innerText = formatter.format(value);
+        }
+        
+        el.classList.remove('text-success', 'text-danger', 'text-warning');
+        if (value > 0) el.classList.add('text-success');
+        else if (value < 0) el.classList.add('text-danger');
+        else el.classList.add('text-warning');
+    }
+
+    window.onload = calculate;
+</script>
+
 </body>
 </html>
