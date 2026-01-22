@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Mô phỏng Chứng Quyền</title>
+    <title>Công Cụ Định Giá & Chiến Lược Chứng Quyền</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --success-color: #27ae60;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --bg-light: #f8f9fa;
+            --accent-color: #008b8b; /* Đổi sang màu Cyan đậm (Dark Cyan) cho hợp tông nền */
+            --success-color: #00b894; 
+            --danger-color: #d63031;  
+            --warning-color: #f1c40f;
             --border-radius: 8px;
-            --box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --box-shadow: 0 8px 20px rgba(0,0,0,0.25); /* Tăng bóng đổ để nổi trên nền màu */
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ecf0f1;
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             color: #333;
             font-size: 15px;
+            min-height: 100vh;
+            
+            /* --- PHẦN CẬP NHẬT MÀU NỀN OMBRE --- */
+            /* Màu dự phòng */
+            background-color: #0f2027; 
+            /* Hiệu ứng Ombre: Xanh Dương Đậm -> Xanh Ngọc Lục Bảo -> Xanh Lá */
+            background-image: linear-gradient(135deg, #051937 0%, #004d7a 30%, #008793 60%, #00bf72 100%);
+            background-attachment: fixed; /* Giữ cố định nền khi cuộn trang */
+            background-size: cover;
         }
 
         .container {
@@ -36,11 +43,12 @@
 
         /* CARD STYLES */
         .card {
-            background: white;
+            background: rgba(255, 255, 255, 0.98); /* Làm mờ nhẹ để hòa vào nền */
             padding: 25px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             height: fit-content;
+            border-top: 4px solid var(--accent-color);
         }
 
         h2, h3 {
@@ -51,10 +59,16 @@
         .header-title {
             text-align: center;
             grid-column: 1 / -1;
-            margin-bottom: 20px;
-            color: var(--primary-color);
+            margin-bottom: 25px;
+            color: #ffffff; /* Chữ trắng nổi bật trên nền Ombre */
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Tạo bóng chữ giúp dễ đọc */
+        }
+        
+        .header-title i {
+            color: #55efc4; /* Icon màu xanh ngọc sáng */
         }
 
         /* INPUT SECTIONS */
@@ -73,17 +87,19 @@
         input[type="number"] {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #c7cdd1;
             border-radius: 6px;
             font-size: 16px;
             box-sizing: border-box;
-            transition: border 0.3s;
+            transition: all 0.3s;
+            background-color: #f8f9fa;
         }
 
         input[type="number"]:focus {
             border-color: var(--accent-color);
             outline: none;
-            background-color: #fbfdff;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 139, 139, 0.2); /* Shadow màu ngọc lục bảo */
         }
 
         .small-note {
@@ -107,7 +123,7 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            color: #7f8c8d;
+            color: #95a5a6;
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
         }
@@ -136,10 +152,10 @@
         }
 
         .simulation-input {
-            background-color: #e8f4fd;
+            background-color: #e0f7fa; /* Nền xanh ngọc nhạt */
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid #b6dbf8;
+            border: 1px solid #b2ebf2;
             margin-bottom: 20px;
         }
 
@@ -165,9 +181,10 @@
         }
 
         .big-result {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
             text-align: right;
+            font-family: 'Consolas', 'Monaco', monospace;
         }
 
         .text-success { color: var(--success-color); }
@@ -199,14 +216,13 @@
             color: var(--primary-color);
         }
         
-        /* Hiển thị công thức toán học giả lập */
         .math-formula {
             font-family: 'Courier New', Courier, monospace;
             background: #eee;
             padding: 2px 5px;
             border-radius: 4px;
             font-weight: bold;
-            color: #d35400;
+            color: #008b8b; /* Màu công thức theo tông xanh ngọc */
         }
 
         /* FOOTER NOTE */
@@ -214,7 +230,7 @@
             grid-column: 1 / -1;
             margin-top: 20px;
             padding: 15px;
-            background-color: #fff8e1;
+            background-color: #fff3cd;
             border-left: 5px solid #ffc107;
             border-radius: 4px;
             font-size: 14px;
@@ -231,13 +247,13 @@
 <body>
 
 <div class="container">
-    <h1 class="header-title"><i class="fas fa-chart-line"></i> Giả Lập Giao Dịch Chứng Quyền (CW)</h1>
+    <h1 class="header-title"><i class="fas fa-chart-pie"></i> Giả Lập Giao Dịch Chứng Quyền (CW)</h1>
 
     <div class="card">
         <h3><i class="fas fa-sliders-h"></i> 1. Thông Số Cấu Hình</h3>
         
         <div class="input-group">
-            <label>Giá thực hiện (Strike Price):</label>
+            <label>Giá thực hiện (K-Strike Price):</label>
             <input type="number" id="strikePrice" value="107550" oninput="calculate()">
             <small class="small-note">Mức giá cổ phiếu cần vượt qua (nếu giữ đáo hạn).</small>
         </div>
@@ -314,10 +330,10 @@
         </div>
 
         <div id="tab-hold" class="scenario-content">
-            <div class="simulation-input" style="background-color: #fcf3cf; border-color: #f9e79f;">
-                <label style="color: #d35400;"><i class="fas fa-chart-bar"></i> Giá thanh toán khi đáo hạn:</label>
+            <div class="simulation-input" style="background-color: #fffde7; border-color: #f9e79f;">
+                <label style="color: #d35400;"><i class="fas fa-chart-bar"></i> Giá thanh toán (S- Settlement Price) khi đáo hạn:</label>
                 <input type="number" id="stockPriceMaturity" value="114300" placeholder="Giá CKCS..." oninput="calculate()">
-                <small class="small-note">Nhập giá cổ phiếu cơ sở dự kiến.</small>
+                <small class="small-note">Nhập giá thanh toán khi đáo hạn dự kiến.</small>
             </div>
 
             <div class="metric-row">
@@ -344,7 +360,7 @@
             <div class="glossary">
                 <h4><i class="fas fa-book"></i> Diễn giải Kịch bản 2</h4>
                 <div class="term-item"><b>Giá thực hiện (K):</b> Mốc giá cố định trong hợp đồng mà bạn kỳ vọng cổ phiếu sẽ vượt qua.</div>
-                <div class="term-item"><b>Giá thanh toán (S):</b> Trung bình giá đóng cửa 5 phiên cuối của cổ phiếu cơ sở trước ngày đáo hạn.</div>
+                <div class="term-item"><b>Giá thanh toán (S):</b> Trung bình giá đóng cửa 5 phiên cuối của chứng khoán cơ sở trước ngày đáo hạn.</div>
                 <div class="term-item">
                     <b>Cách tính tiền:</b> 
                     <span class="math-formula">[(S - K) : Tỷ lệ] × Số lượng</span>
@@ -458,6 +474,3 @@
 
 </body>
 </html>
-
-
-
